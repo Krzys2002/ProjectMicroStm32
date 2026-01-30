@@ -1,0 +1,5 @@
+../Components/Src/logbuf.c:16:17:next_idx	1
+../Components/Src/logbuf.c:18:6:logbuf_init	1
+../Components/Src/logbuf.c:20:8:logbuf_write	3
+../Components/Src/logbuf.c:34:8:logbuf_available	2
+../Components/Src/logbuf.c:43:8:logbuf_read	3

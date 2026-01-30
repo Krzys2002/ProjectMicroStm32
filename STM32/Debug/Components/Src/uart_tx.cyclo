@@ -1,0 +1,2 @@
+../Components/Src/uart_tx.c:18:6:HAL_UART_TxCpltCallback	2
+../Components/Src/uart_tx.c:25:6:StartUartTxTask	5

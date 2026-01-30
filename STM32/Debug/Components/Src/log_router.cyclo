@@ -1,0 +1,5 @@
+../Components/Src/log_router.c:15:6:log_router_init	1
+../Components/Src/log_router.c:21:6:log_set_uart	1
+../Components/Src/log_router.c:22:6:log_set_eth	1
+../Components/Src/log_router.c:23:11:log_get_output	1
+../Components/Src/log_router.c:26:6:log_json	4
