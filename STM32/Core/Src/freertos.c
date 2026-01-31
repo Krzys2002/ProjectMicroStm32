@@ -31,6 +31,8 @@
 #include "uart_tx.h"
 #include "uart_rx.h"
 #include "telemetry.h"
+#include "pid_sample_rb.h"
+#include "control_state.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -171,10 +173,17 @@ void StartDefaultTask(void const * argument)
 
   for(;;)
   {
-	  snprintf(buf, sizeof(buf), "{\"i\": %d}", i);
-	  log_json(buf);
-	  i++;
-	  osDelay(500);
+	pid_sample_t s = {
+		.t_ms = 0,
+		.pos_deg = control_get_setpoint_deg(),
+		.spd_deg_s = 0,
+		.sp_deg = control_get_setpoint_deg(),
+		.out = 0
+	};
+
+	pidrb_push_isr(&s);
+
+	osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }
