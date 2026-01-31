@@ -53,3 +53,6 @@ dkms.conf
 
 # debug information files
 *.dwo
+PC_APP/.DS_Store
+PC_APP/.github/.DS_Store
+PC_APP/.github/workflows/.DS_Store
