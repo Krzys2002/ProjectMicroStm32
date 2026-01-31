@@ -1,0 +1,2 @@
+../Components/Src/motor_control.c:27:6:MotorControl_Init	1
+../Components/Src/motor_control.c:52:6:MotorControl_Step	5
