@@ -5,27 +5,42 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Components/Src/command_handler.c \
+../Components/Src/control_state.c \
 ../Components/Src/log_router.c \
 ../Components/Src/logbuf.c \
 ../Components/Src/net_discovery.c \
 ../Components/Src/net_server.c \
 ../Components/Src/net_tx.c \
+../Components/Src/pid_sample_rb.c \
+../Components/Src/telemetry.c \
+../Components/Src/uart_rx.c \
 ../Components/Src/uart_tx.c 
 
 OBJS += \
+./Components/Src/command_handler.o \
+./Components/Src/control_state.o \
 ./Components/Src/log_router.o \
 ./Components/Src/logbuf.o \
 ./Components/Src/net_discovery.o \
 ./Components/Src/net_server.o \
 ./Components/Src/net_tx.o \
+./Components/Src/pid_sample_rb.o \
+./Components/Src/telemetry.o \
+./Components/Src/uart_rx.o \
 ./Components/Src/uart_tx.o 
 
 C_DEPS += \
+./Components/Src/command_handler.d \
+./Components/Src/control_state.d \
 ./Components/Src/log_router.d \
 ./Components/Src/logbuf.d \
 ./Components/Src/net_discovery.d \
 ./Components/Src/net_server.d \
 ./Components/Src/net_tx.d \
+./Components/Src/pid_sample_rb.d \
+./Components/Src/telemetry.d \
+./Components/Src/uart_rx.d \
 ./Components/Src/uart_tx.d 
 
 
@@ -36,7 +51,7 @@ Components/Src/%.o Components/Src/%.su Components/Src/%.cyclo: ../Components/Src
 clean: clean-Components-2f-Src
 
 clean-Components-2f-Src:
-	-$(RM) ./Components/Src/log_router.cyclo ./Components/Src/log_router.d ./Components/Src/log_router.o ./Components/Src/log_router.su ./Components/Src/logbuf.cyclo ./Components/Src/logbuf.d ./Components/Src/logbuf.o ./Components/Src/logbuf.su ./Components/Src/net_discovery.cyclo ./Components/Src/net_discovery.d ./Components/Src/net_discovery.o ./Components/Src/net_discovery.su ./Components/Src/net_server.cyclo ./Components/Src/net_server.d ./Components/Src/net_server.o ./Components/Src/net_server.su ./Components/Src/net_tx.cyclo ./Components/Src/net_tx.d ./Components/Src/net_tx.o ./Components/Src/net_tx.su ./Components/Src/uart_tx.cyclo ./Components/Src/uart_tx.d ./Components/Src/uart_tx.o ./Components/Src/uart_tx.su
+	-$(RM) ./Components/Src/command_handler.cyclo ./Components/Src/command_handler.d ./Components/Src/command_handler.o ./Components/Src/command_handler.su ./Components/Src/control_state.cyclo ./Components/Src/control_state.d ./Components/Src/control_state.o ./Components/Src/control_state.su ./Components/Src/log_router.cyclo ./Components/Src/log_router.d ./Components/Src/log_router.o ./Components/Src/log_router.su ./Components/Src/logbuf.cyclo ./Components/Src/logbuf.d ./Components/Src/logbuf.o ./Components/Src/logbuf.su ./Components/Src/net_discovery.cyclo ./Components/Src/net_discovery.d ./Components/Src/net_discovery.o ./Components/Src/net_discovery.su ./Components/Src/net_server.cyclo ./Components/Src/net_server.d ./Components/Src/net_server.o ./Components/Src/net_server.su ./Components/Src/net_tx.cyclo ./Components/Src/net_tx.d ./Components/Src/net_tx.o ./Components/Src/net_tx.su ./Components/Src/pid_sample_rb.cyclo ./Components/Src/pid_sample_rb.d ./Components/Src/pid_sample_rb.o ./Components/Src/pid_sample_rb.su ./Components/Src/telemetry.cyclo ./Components/Src/telemetry.d ./Components/Src/telemetry.o ./Components/Src/telemetry.su ./Components/Src/uart_rx.cyclo ./Components/Src/uart_rx.d ./Components/Src/uart_rx.o ./Components/Src/uart_rx.su ./Components/Src/uart_tx.cyclo ./Components/Src/uart_tx.d ./Components/Src/uart_tx.o ./Components/Src/uart_tx.su
 
 .PHONY: clean-Components-2f-Src
 

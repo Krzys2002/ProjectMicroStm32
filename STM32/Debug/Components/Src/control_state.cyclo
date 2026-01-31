@@ -1,0 +1,6 @@
+../Components/Src/control_state.c:14:6:control_init	1
+../Components/Src/control_state.c:21:6:control_set_out_uart	1
+../Components/Src/control_state.c:22:6:control_set_out_eth	1
+../Components/Src/control_state.c:23:11:control_get_out	1
+../Components/Src/control_state.c:25:6:control_set_setpoint_deg	1
+../Components/Src/control_state.c:26:7:control_get_setpoint_deg	1

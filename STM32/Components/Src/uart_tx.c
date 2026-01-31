@@ -8,7 +8,7 @@
 #include "cmsis_os.h"
 #include "stm32f7xx_hal.h"
 #include "logbuf.h"
-#include "log_router.h"
+#include "control_state.h"
 #include "uart_tx.h"
 
 extern UART_HandleTypeDef huart3;   // change to your UART
@@ -22,10 +22,10 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
     }
 }
 
-void StartUartTxTask(void const * argument)
+void UartTx()
 {
     for (;;) {
-        if (log_get_output() != LOG_OUT_UART) {
+        if (control_get_out() != LOG_OUT_UART) {
             osDelay(50);
             continue;
         }
@@ -38,7 +38,7 @@ void StartUartTxTask(void const * argument)
                     uart_busy = 0; // try again later
                 }
             } else {
-                osDelay(10);
+                osDelay(1);
             }
         } else {
             osDelay(1);

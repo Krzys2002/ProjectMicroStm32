@@ -14,9 +14,8 @@
 #define TCP_PORT       5000
 #define MY_NAME        "stm32-f767zi"
 
-void StartNetDiscoverTask(void const * argument)
+void NetDiscover()
 {
-  (void)argument;
 
   // Wait a bit so LwIP finishes init (important!)
   osDelay(500);

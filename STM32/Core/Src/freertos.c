@@ -29,6 +29,8 @@
 #include "net_server.h"
 #include "net_tx.h"
 #include "uart_tx.h"
+#include "uart_rx.h"
+#include "telemetry.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,6 +57,8 @@ osThreadId NetDiscoverTaskHandle;
 osThreadId NetServerTaskHandle;
 osThreadId NetTxTaskHandle;
 osThreadId UartTxTaskHandle;
+osThreadId TelemetryTaskHandle;
+osThreadId UartRxTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -66,6 +70,8 @@ void StartNetDiscoverTask(void const * argument);
 void StartNetServerTask(void const * argument);
 void StartNetTxTask(void const * argument);
 void StartUartTxTask(void const * argument);
+void StartTelemetryTask(void const * argument);
+void StartUartRxTask(void const * argument);
 
 extern void MX_LWIP_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -133,6 +139,14 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(UartTxTask, StartUartTxTask, osPriorityIdle, 0, 256);
   UartTxTaskHandle = osThreadCreate(osThread(UartTxTask), NULL);
 
+  /* definition and creation of TelemetryTask */
+  osThreadDef(TelemetryTask, StartTelemetryTask, osPriorityBelowNormal, 0, 256);
+  TelemetryTaskHandle = osThreadCreate(osThread(TelemetryTask), NULL);
+
+  /* definition and creation of UartRxTask */
+  osThreadDef(UartRxTask, StartUartRxTask, osPriorityNormal, 0, 256);
+  UartRxTaskHandle = osThreadCreate(osThread(UartRxTask), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -163,6 +177,96 @@ void StartDefaultTask(void const * argument)
 	  osDelay(500);
   }
   /* USER CODE END StartDefaultTask */
+}
+
+/* USER CODE BEGIN Header_StartNetDiscoverTask */
+/**
+* @brief Function implementing the NetDiscoverTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartNetDiscoverTask */
+void StartNetDiscoverTask(void const * argument)
+{
+  /* USER CODE BEGIN StartNetDiscoverTask */
+  /* Infinite loop */
+  NetDiscover();
+  /* USER CODE END StartNetDiscoverTask */
+}
+
+/* USER CODE BEGIN Header_StartNetServerTask */
+/**
+* @brief Function implementing the NetServerTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartNetServerTask */
+void StartNetServerTask(void const * argument)
+{
+  /* USER CODE BEGIN StartNetServerTask */
+  /* Infinite loop */
+  NetServer();
+  /* USER CODE END StartNetServerTask */
+}
+
+/* USER CODE BEGIN Header_StartNetTxTask */
+/**
+* @brief Function implementing the NetTxTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartNetTxTask */
+void StartNetTxTask(void const * argument)
+{
+  /* USER CODE BEGIN StartNetTxTask */
+  /* Infinite loop */
+  NetTx();
+  /* USER CODE END StartNetTxTask */
+}
+
+/* USER CODE BEGIN Header_StartUartTxTask */
+/**
+* @brief Function implementing the UartTxTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUartTxTask */
+void StartUartTxTask(void const * argument)
+{
+  /* USER CODE BEGIN StartUartTxTask */
+  /* Infinite loop */
+  UartTx();
+  /* USER CODE END StartUartTxTask */
+}
+
+/* USER CODE BEGIN Header_StartTelemetryTask */
+/**
+* @brief Function implementing the TelemetryTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTelemetryTask */
+void StartTelemetryTask(void const * argument)
+{
+  /* USER CODE BEGIN StartTelemetryTask */
+  /* Infinite loop */
+	Telemetry();
+  /* USER CODE END StartTelemetryTask */
+}
+
+/* USER CODE BEGIN Header_StartUartRxTask */
+/**
+* @brief Function implementing the UartRxTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUartRxTask */
+void StartUartRxTask(void const * argument)
+{
+  /* USER CODE BEGIN StartUartRxTask */
+  /* Infinite loop */
+	UartRx();
+  /* USER CODE END StartUartRxTask */
 }
 
 /* Private application code --------------------------------------------------*/

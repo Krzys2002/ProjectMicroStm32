@@ -10,12 +10,12 @@
 #include "logbuf.h"
 #include "cmsis_os.h"
 #include "FreeRTOS.h"
-#include "log_router.h"
+#include "control_state.h"
 
 extern volatile int g_client_fd;
 
 
-void StartNetTxTask(void const * argument)
+void NetTx(t)
 {
   /* USER CODE BEGIN StartNetTxTask */
 	extern volatile int g_client_fd;
@@ -25,7 +25,7 @@ void StartNetTxTask(void const * argument)
 	  uint8_t out[512];
 
 	      for (;;) {
-	          if (log_get_output() != LOG_OUT_ETH) {
+	          if (control_get_out() != LOG_OUT_ETH) {
 	              osDelay(50);
 	              continue;
 	          }

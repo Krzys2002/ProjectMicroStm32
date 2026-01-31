@@ -1,0 +1,3 @@
+../Components/Src/uart_rx.c:21:13:process_new_bytes	6
+../Components/Src/uart_rx.c:48:6:uart_rx_dma_init	1
+../Components/Src/uart_rx.c:60:6:UartRx	2

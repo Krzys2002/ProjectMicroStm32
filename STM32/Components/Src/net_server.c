@@ -18,22 +18,10 @@ volatile int g_client_fd = -1;
 
 #define TCP_PORT 5000
 
-static void handle_line(const char *line)
-{
-    if (strstr(line, "\"cmd\":\"set_out\"") && strstr(line, "\"value\":\"ETH\"")) {
-        log_set_eth();
-        log_json("{\"type\":\"info\",\"msg\":\"output=ETH\"}\n");
-    }
-    if (strstr(line, "\"cmd\":\"set_out\"") && strstr(line, "\"value\":\"UART\"")) {
-        log_set_uart();
-        log_json("{\"type\":\"info\",\"msg\":\"output=UART\"}\n");
-    }
-}
+void handle_line(const char *line); // from command_handler.c
 
-void StartNetServerTask(void const * argument)
+void NetServer(void const * argument)
 {
-	(void)argument;
-
 	// Wait a bit so LwIP finishes init (important!)
 	osDelay(500);
 	volatile int g_client_fd = -1;

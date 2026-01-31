@@ -8,6 +8,6 @@
 #ifndef INC_NET_SERVER_H_
 #define INC_NET_SERVER_H_
 
-void StartNetServerTask(void const * argument);
+void NetServer();
 
 #endif /* INC_NET_SERVER_H_ */

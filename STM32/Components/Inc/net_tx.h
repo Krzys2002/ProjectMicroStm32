@@ -8,6 +8,6 @@
 #ifndef INC_NET_TX_H_
 #define INC_NET_TX_H_
 
-void StartNetTxTask(void const * argument);
+void NetTx();
 
 #endif /* INC_NET_TX_H_ */

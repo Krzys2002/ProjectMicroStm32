@@ -8,6 +8,6 @@
 #ifndef INC_NET_DISCOVERY_H_
 #define INC_NET_DISCOVERY_H_
 
-void StartNetDiscoverTask(void const * argument);
+void NetDiscover();
 
 #endif /* INC_NET_DISCOVERY_H_ */

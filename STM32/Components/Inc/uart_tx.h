@@ -8,6 +8,6 @@
 #ifndef INC_UART_TX_H_
 #define INC_UART_TX_H_
 
-void StartUartTxTask(void const * argument);
+void UartTx();
 
 #endif /* INC_UART_TX_H_ */

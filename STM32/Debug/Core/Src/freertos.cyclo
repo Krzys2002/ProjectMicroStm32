@@ -1,3 +1,9 @@
-../Core/Src/freertos.c:80:6:vApplicationGetIdleTaskMemory	1
-../Core/Src/freertos.c:94:6:MX_FREERTOS_Init	1
-../Core/Src/freertos.c:149:6:StartDefaultTask	1
+../Core/Src/freertos.c:86:6:vApplicationGetIdleTaskMemory	1
+../Core/Src/freertos.c:100:6:MX_FREERTOS_Init	1
+../Core/Src/freertos.c:163:6:StartDefaultTask	1
+../Core/Src/freertos.c:189:6:StartNetDiscoverTask	1
+../Core/Src/freertos.c:204:6:StartNetServerTask	1
+../Core/Src/freertos.c:219:6:StartNetTxTask	1
+../Core/Src/freertos.c:234:6:StartUartTxTask	1
+../Core/Src/freertos.c:249:6:StartTelemetryTask	1
+../Core/Src/freertos.c:264:6:StartUartRxTask	1
