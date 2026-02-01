@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "uart_rx.h"
 #include "control_state.h"
+#include "motor_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,6 +102,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   control_init();
   uart_rx_dma_init(&huart3);
+  MotorControl_Init();
+  HAL_TIM_Base_Start_IT(&htim7); //PID 
+  HAL_TIM_Base_Start(&htim2);    //encoder 
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
