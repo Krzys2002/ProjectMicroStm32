@@ -24,7 +24,7 @@ class DeviceClient : public QObject {
         void closeSerial();
 
         // Ethernet
-        void startDiscovery(int timeoutMs=300);
+        void startDiscovery(const QString &broadcastAddr = "255.255.255.255", int timeoutMs=1000);
         void connectTcp(const QHostAddress &ip, quint16 port);
         void disconnectTcp();
 
@@ -36,6 +36,7 @@ class DeviceClient : public QObject {
         void connected();
         void disconnected();
         void jsonLineReceived(QByteArray line);
+        void discoveryTimeout();
         void error(QString msg);
 
     private slots:

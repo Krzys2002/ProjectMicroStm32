@@ -15,7 +15,7 @@
 extern volatile int g_client_fd;
 
 
-void NetTx(t)
+void NetTx()
 {
   /* USER CODE BEGIN StartNetTxTask */
 	extern volatile int g_client_fd;

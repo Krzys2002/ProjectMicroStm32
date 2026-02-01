@@ -10,6 +10,8 @@
 #include "motor_control.h"
 #include "control_state.h"
 #include "pid_sample_rb.h"
+#include "control_state.h"
+#include "pwm.h"
 
 /* Private variables ---------------------------------------------------------*/
 extern TIM_HandleTypeDef htim1;
@@ -19,11 +21,14 @@ static arm_pid_instance_f32 PID;
 static uint32_t last_hw_cnt = 0;
 static float current_pos_deg = 0.0f;
 static float last_out = 0.0f;
+float out = 0;
 
 /**
   * @brief  Initializes the PID instance and starts PWM peripherals.
   * @retval None
   */
+PWM_Handle_TypeDef hand1 = PWM_INIT_HANDLE(&htim1, TIM_CHANNEL_2);
+
 void MotorControl_Init(void)
 {
     float Ts = 1.0f / PID_FREQUENCY_HZ;
@@ -31,8 +36,8 @@ void MotorControl_Init(void)
     last_hw_cnt = __HAL_TIM_GET_COUNTER(&htim2);
 
     /* CMSIS-DSP PID Configuration */
-    PID.Kp = 0.65f;
-    PID.Ki = 0.15f * Ts;
+    PID.Kp = 0.4f;
+    PID.Ki = 0.01f * Ts;
     PID.Kd = 0.02f / Ts;
 
     arm_pid_init_f32(&PID, 1);
@@ -40,7 +45,7 @@ void MotorControl_Init(void)
     pidrb_init();
 
     /* Start PWM Generation */
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+    PWM_Init(&hand1);
 }
 
 /**
@@ -63,19 +68,25 @@ void MotorControl_Step(void)
 
     /* Compute control effort */
     float error = control_get_setpoint_deg() - current_pos_deg;
-    float out = arm_pid_f32(&PID, error);
+    out = arm_pid_f32(&PID, error);
 
+    float out_pwm = out;
     /* Output clamping */
-    if (out > MAX_OUT) out = MAX_OUT;
-    else if (out < -MAX_OUT) out = -MAX_OUT;
+    if (out > 50.0f) out_pwm = 50.f;
+    else if (out < -50.0f) out_pwm = -50.0f;
+
+    if(out < 15.0f && out > 5.0f) out_pwm = 20.0f;
+    else if(out > -15.0f && out < -5.0f) out_pwm = -20.0f;
+
+    if(out < 5.0f && out > -5.0f) out_pwm = 0;
 
     /* Actuator update */
-    if (out >= 0) {
+    if (out_pwm >= 0) {
         HAL_GPIO_WritePin(MOTOR_DIR_GPIO_Port, MOTOR_DIR_Pin, GPIO_PIN_SET);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)out);
+        PWM_WriteDuty(&hand1, out_pwm);
     } else {
         HAL_GPIO_WritePin(MOTOR_DIR_GPIO_Port, MOTOR_DIR_Pin, GPIO_PIN_RESET);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)fabsf(out));
+        PWM_WriteDuty(&hand1, -out_pwm);
     }
 
     last_out = out;

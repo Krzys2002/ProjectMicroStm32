@@ -25,6 +25,8 @@ void NetDiscover()
     for(;;) osDelay(1000);
   }
 
+  osDelay(50000);
+
   int opt = 1;
   setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 

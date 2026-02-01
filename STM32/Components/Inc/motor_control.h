@@ -23,8 +23,8 @@ extern "C" {
 /** @defgroup MOTOR_CONFIG Motor Configuration Constants
   * @{
   */
-#define PULSES_PER_REV    20.0f    /**< Encoder pulses per full rotation */
-#define PID_FREQUENCY_HZ  1000.0f  /**< Control loop frequency in Hz */
+#define PULSES_PER_REV    96.0f    /**< Encoder pulses per full rotation */
+#define PID_FREQUENCY_HZ  50.0f  /**< Control loop frequency in Hz */
 #define MAX_OUT           1000.0f  /**< Maximum PWM duty cycle (CCR value) */
 /**
   * @}

@@ -8,6 +8,7 @@
 "./Components/Src/net_server.o"
 "./Components/Src/net_tx.o"
 "./Components/Src/pid_sample_rb.o"
+"./Components/Src/pwm.o"
 "./Components/Src/telemetry.o"
 "./Components/Src/uart_rx.o"
 "./Components/Src/uart_tx.o"

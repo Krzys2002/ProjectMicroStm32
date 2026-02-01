@@ -38,7 +38,7 @@ void DeviceClient::openSerial(const QString &portName, int baud) {
 
 void DeviceClient::closeSerial(){ m_serial.close(); }
 
-void DeviceClient::startDiscovery(int timeoutMs) {
+void DeviceClient::startDiscovery(const QString &broadcastAddr, int timeoutMs) {
   if (!m_udp.isValid()) {
     if (!m_udp.bind(QHostAddress::AnyIPv4, DISCOVERY_PORT,
                     QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint)) {
@@ -47,10 +47,8 @@ void DeviceClient::startDiscovery(int timeoutMs) {
     }
   }
 
-  // For direct PC<->STM link use subnet broadcast, otherwise Broadcast is okay.
-  // You can change to "192.168.10.255" if you use that subnet.
   QByteArray msg = "WHO_IS_STM32?\n";
-  m_udp.writeDatagram(msg, QHostAddress::Broadcast, DISCOVERY_PORT);
+  m_udp.writeDatagram(msg, QHostAddress(broadcastAddr), DISCOVERY_PORT);
 
   m_discTimer.start(timeoutMs);
 }
@@ -79,6 +77,8 @@ void DeviceClient::onUdpReady() {
     QString s = QString::fromUtf8(dg.data()).trimmed();
     if (!s.startsWith("STM32")) continue;
 
+    m_discTimer.stop(); // Stop timer if we found a device
+
     quint16 port = 5000;
     QString name;
 
@@ -92,7 +92,7 @@ void DeviceClient::onUdpReady() {
 }
 
 void DeviceClient::onDiscoveryTimeout() {
-  // no-op; UI can retry
+  emit discoveryTimeout();
 }
 
 static void emitLinesFromBuffer(QByteArray &buf, QObject *obj, void (DeviceClient::*sig)(QByteArray)) {

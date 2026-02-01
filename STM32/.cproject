@@ -76,7 +76,7 @@
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.430853312" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\yobibit\Documents\SEM 5\Projects\MIcroprocessors\ProjectMicroStm32\STM32\Drivers\CMSIS\Include&quot;"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F7xx/Include"/>
@@ -103,8 +103,8 @@
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Components/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Core/Src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\yobibit\STM32Cube\Repository\Packs\ARM\CMSIS-DSP\1.16.2\Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\yobibit\STM32Cube\Repository\Packs\ARM\CMSIS-DSP\1.16.2\Source\ControllerFunctions&quot;"/>
+									<listOptionValue builtIn="false" value="/Users/krzysztofsawicki/STM32Cube/Repository/Packs/ARM/CMSIS-DSP/1.16.2/Include"/>
+									<listOptionValue builtIn="false" value="/Users/krzysztofsawicki/STM32Cube/Repository/Packs/ARM/CMSIS-DSP/1.16.2/Source/ControllerFunctions"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.392967649" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>

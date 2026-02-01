@@ -33,6 +33,9 @@
 #include "telemetry.h"
 #include "pid_sample_rb.h"
 #include "control_state.h"
+#include "lwip.h"
+#include "lwip/netif.h"
+#include "lwip/ip_addr.h"   // for ipaddr_ntoa if you print IP
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -173,15 +176,7 @@ void StartDefaultTask(void const * argument)
 
   for(;;)
   {
-	pid_sample_t s = {
-		.t_ms = 0,
-		.pos_deg = control_get_setpoint_deg(),
-		.spd_deg_s = 0,
-		.sp_deg = control_get_setpoint_deg(),
-		.out = 0
-	};
 
-	pidrb_push_isr(&s);
 
 	osDelay(1000);
   }

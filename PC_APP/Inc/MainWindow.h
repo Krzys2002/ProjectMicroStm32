@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QComboBox>
+#include <QLineEdit>
 #include "DeviceClient.h"
 #include "AngleDial.h"
 #include "SerialConsole.h"
@@ -20,6 +21,7 @@ class MainWindow : public QMainWindow {
     private slots:
       void onFound(QHostAddress ip, quint16 port, QString name);
         void onJson(QByteArray line);
+        void onDiscoveryTimeout();
         void toggleMode();
         void sendSetpoint();
         void discover();
@@ -42,6 +44,7 @@ class MainWindow : public QMainWindow {
         QLabel *m_modeLabel = nullptr;
 
         QPushButton *m_discoverBtn = nullptr;
+        QLineEdit *m_udpAddrEdit = nullptr;
         QComboBox *m_serialPorts = nullptr;
         QPushButton *m_connectSerialBtn = nullptr;
 

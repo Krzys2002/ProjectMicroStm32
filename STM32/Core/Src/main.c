@@ -104,7 +104,7 @@ int main(void)
   uart_rx_dma_init(&huart3);
   MotorControl_Init();
   HAL_TIM_Base_Start_IT(&htim7); //PID 
-  HAL_TIM_Base_Start(&htim2);    //encoder 
+  HAL_TIM_Base_Start(&htim2);    //encoder
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
@@ -203,7 +203,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
   /* USER CODE BEGIN Callback 1 */
 
-
+  if (htim->Instance == TIM7)
+    {
+	  MotorControl_Step();
+    }
 
   /* USER CODE END Callback 1 */
 }

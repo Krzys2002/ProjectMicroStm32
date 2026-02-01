@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QSerialPortInfo>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
@@ -33,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
   m_modeLabel = new QLabel;
 
   m_discoverBtn = new QPushButton("UDP Discover");
+  m_udpAddrEdit = new QLineEdit("255.255.255.255");
+  m_udpAddrEdit->setFixedWidth(120);
   m_serialPorts = new QComboBox;
   m_connectSerialBtn = new QPushButton("Open Serial");
   QPushButton *consoleBtn = new QPushButton("Serial Console");
@@ -47,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
   top->addWidget(m_modeBtn);
   top->addStretch();
   top->addWidget(m_discoverBtn);
+  top->addWidget(m_udpAddrEdit);
   top->addWidget(m_serialPorts);
   top->addWidget(m_connectSerialBtn);
   top->addWidget(consoleBtn);
@@ -64,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
   // Client signals
   connect(&m_client, &DeviceClient::deviceFound, this, &MainWindow::onFound);
   connect(&m_client, &DeviceClient::jsonLineReceived, this, &MainWindow::onJson);
+  connect(&m_client, &DeviceClient::discoveryTimeout, this, &MainWindow::onDiscoveryTimeout);
 
   connect(m_modeBtn, &QPushButton::clicked, this, &MainWindow::toggleMode);
   connect(sendSp, &QPushButton::clicked, this, &MainWindow::sendSetpoint);
@@ -120,7 +125,7 @@ void MainWindow::discover()
   m_mode = DeviceClient::ENT;
   m_client.setMode(DeviceClient::ENT);
   updateModeUi();
-  m_client.startDiscovery(300);
+  m_client.startDiscovery(m_udpAddrEdit->text(), 1000);
 }
 
 void MainWindow::onFound(QHostAddress ip, quint16 port, QString name)
@@ -137,6 +142,11 @@ void MainWindow::onFound(QHostAddress ip, quint16 port, QString name)
   m_client.setMode(DeviceClient::ENT);
   updateModeUi();
   sendOutCmd();
+}
+
+void MainWindow::onDiscoveryTimeout()
+{
+  QMessageBox::warning(this, "Discovery Timeout", "No STM32 devices found on the network.");
 }
 
 void MainWindow::sendOutCmd()
