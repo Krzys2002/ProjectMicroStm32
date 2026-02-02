@@ -1,4 +1,4 @@
-# ProjeckKSMSIM: Motor Control System with Telemetry
+# Projeck: Motor Control System with Telemetry
 
 This project is a complete motor control system consisting of an STM32-based firmware and a Qt-based PC application. It features a PID-based position controller, real-time telemetry, and dual-mode communication (UART and Ethernet).
 
