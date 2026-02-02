@@ -58,19 +58,60 @@ Below is the high-level architecture of the user-written components in the firmw
 
 ```mermaid
 graph TD
-    subgraph "STM32 Firmware"
-        MC[Motor Control Loop] --> PID[PID Controller]
-        MC --> RB[PID Ring Buffer]
-        Tel[Telemetry Task] --> RB
-        Tel --> LR[Log Router]
-        LR --> LB[Global Log Buffer]
-        LB --> Comm[UART/ETH Transmit]
-        RX[UART/ETH Receive] --> CH[Command Handler]
-        CH --> CS[Control State]
-        CS -.-> MC
+    subgraph "Interrupt Context (TIM7)"
+        MC_Step[MotorControl_Step]
+        PID[CMSIS-DSP PID]
+        MC_Step --> PID
+        MC_Step --> PWM_WD[PWM_WriteDuty]
+        MC_Step --> RB_Push[pidrb_push_isr]
     end
-    Comm <--> PC[PC Application]
-    PC <--> RX
+
+    subgraph "Telemetry Task"
+        TelTask[Telemetry Task]
+        RB_Pop[pidrb_pop]
+        LogJ[log_json]
+        TelTask --> RB_Pop
+        TelTask --> LogJ
+    end
+
+    subgraph "Communication & Routing"
+        LogJ --> LBuf_W[logbuf_write]
+        
+        UTx[UartTx Task] --> LBuf_R[logbuf_read]
+        UTx --> HAL_UART_DMA[HAL_UART_Transmit_DMA]
+        
+        NTx[NetTx Task] --> LBuf_R
+        NTx --> LWIP_Send[lwip_send]
+        
+        CS_GetOut{control_get_out}
+        UTx -.-> CS_GetOut
+        NTx -.-> CS_GetOut
+    end
+
+    subgraph "Command Handling"
+        URx[UartRx Task] --> HLine[handle_line]
+        NSrv[NetServer Task] --> HLine
+        HLine --> CS_Set[control_set_setpoint / out]
+        HLine --> LogJ
+    end
+
+    subgraph "State & Data"
+        RB[(PID Ring Buffer)]
+        LBuf[(Global Log Buffer)]
+        CState[Control State Settings]
+        
+        RB_Push -.-> RB
+        RB_Pop -.-> RB
+        LBuf_W -.-> LBuf
+        LBuf_R -.-> LBuf
+        CS_Set -.-> CState
+        CS_GetOut -.-> CState
+    end
+
+    %% Initialization flow
+    Start([main.c]) --> MC_Init[MotorControl_Init]
+    Start --> CS_Init[control_init]
+    Start --> URx_Init[uart_rx_dma_init]
 ```
 
 ## Authors
