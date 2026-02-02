@@ -1,9 +1,9 @@
-/*
- * telemetry_task.c
- *
- *  Created on: Jan 31, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    telemetry.c
+  * @brief   Implementation of the telemetry task.
+  ******************************************************************************
+  */
 
 #include "telemetry.h"
 #include "cmsis_os.h"
@@ -12,6 +12,12 @@
 #include "log_router.h"   // your log_json(...)
 #include <stdio.h>
 
+/**
+  * @brief  Main telemetry task.
+  *         Pops samples from the PID ring buffer, formats them as JSON,
+  *         and sends them to the log router.
+  * @retval None
+  */
 void Telemetry()
 {
   // Wait until LwIP ready if you use ENT; safe anyway

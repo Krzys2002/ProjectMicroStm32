@@ -1,9 +1,9 @@
-/*
- * net_tx.c
- *
- *  Created on: Jan 30, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    net_tx.c
+  * @brief   Implementation of the network transmission task.
+  ******************************************************************************
+  */
 
 #include "net_tx.h"
 #include "lwip/sockets.h"
@@ -12,13 +12,16 @@
 #include "FreeRTOS.h"
 #include "control_state.h"
 
-extern volatile int g_client_fd;
+extern volatile int g_client_fd; /**< External reference to the connected client socket descriptor */
 
-
+/**
+  * @brief  Main network transmission task.
+  *         Reads data from log buffer and sends it over the TCP socket if connected.
+  * @retval None
+  */
 void NetTx()
 {
   /* USER CODE BEGIN StartNetTxTask */
-	extern volatile int g_client_fd;
   /* Infinite loop */
   for(;;)
   {

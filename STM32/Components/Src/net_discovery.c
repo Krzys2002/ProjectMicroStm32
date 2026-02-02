@@ -1,19 +1,25 @@
-/*
- * net_discovery.c
- *
- *  Created on: Jan 30, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    net_discovery.c
+  * @brief   Implementation of the network discovery task (UDP beacon).
+  ******************************************************************************
+  */
+
 #include "net_discovery.h"
 #include "cmsis_os.h"
 #include "lwip/sockets.h"
 #include <string.h>
 #include <stdio.h>
 
-#define DISCOVERY_PORT 40000
-#define TCP_PORT       5000
-#define MY_NAME        "stm32-f767zi"
+#define DISCOVERY_PORT 40000 /**< UDP port for discovery */
+#define TCP_PORT       5000  /**< Main TCP server port */
+#define MY_NAME        "stm32-f767zi" /**< Device name reported in discovery */
 
+/**
+  * @brief  Main network discovery task.
+  *         Listens for UDP discovery requests and replies with device info.
+  * @retval None
+  */
 void NetDiscover()
 {
 

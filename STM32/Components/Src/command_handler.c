@@ -1,15 +1,21 @@
-/*
- * command_handler.c
- *
- *  Created on: Jan 31, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    command_handler.c
+  * @brief   Implementation of JSON-based command processing.
+  ******************************************************************************
+  */
 
 #include <string.h>
 #include <stdlib.h>  // strtof
 #include <stdio.h>
 #include "control_state.h"
 
+/**
+  * @brief  Helper function to find a key in a JSON string.
+  * @param  s: Pointer to the JSON string.
+  * @param  key: The key to search for.
+  * @retval const char*: Pointer to the value following the key, or NULL if not found.
+  */
 static const char* find_key(const char *s, const char *key)
 {
     const char *p = strstr(s, key);
@@ -17,6 +23,11 @@ static const char* find_key(const char *s, const char *key)
     return p + strlen(key);
 }
 
+/**
+  * @brief  Parses and executes a command from a single line of text.
+  * @param  line: Pointer to the line of text (JSON).
+  * @retval None
+  */
 void handle_line(const char *line)
 {
     if (!line || !line[0]) return;

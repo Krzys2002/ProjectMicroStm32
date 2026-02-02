@@ -1,9 +1,9 @@
-/*
- * uart_tx.c
- *
- *  Created on: Jan 30, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    uart_tx.c
+  * @brief   Implementation of the UART transmission task.
+  ******************************************************************************
+  */
 
 #include "cmsis_os.h"
 #include "stm32f7xx_hal.h"
@@ -11,10 +11,15 @@
 #include "control_state.h"
 #include "uart_tx.h"
 
-extern UART_HandleTypeDef huart3;   // change to your UART
-static volatile int uart_busy = 0;
-static uint8_t uart_tx_buf[256];
+extern UART_HandleTypeDef huart3;   /**< UART handle used for transmission */
+static volatile int uart_busy = 0;   /**< Flag indicating UART transmission is in progress */
+static uint8_t uart_tx_buf[256];    /**< Local buffer for UART transmission */
 
+/**
+  * @brief  UART Tx Transfer completed callback.
+  * @param  huart: Pointer to UART handle.
+  * @retval None
+  */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
     if (huart == &huart3) {
@@ -22,6 +27,11 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
     }
 }
 
+/**
+  * @brief  Main UART transmission task.
+  *         Reads data from log buffer and transmits it via UART DMA.
+  * @retval None
+  */
 void UartTx()
 {
     for (;;) {

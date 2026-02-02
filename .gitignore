@@ -56,3 +56,4 @@ dkms.conf
 PC_APP/.DS_Store
 PC_APP/.github/.DS_Store
 PC_APP/.github/workflows/.DS_Store
+/.idea

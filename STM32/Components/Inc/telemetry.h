@@ -1,13 +1,17 @@
-/*
- * telemetry_task.h
- *
- *  Created on: Jan 31, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    telemetry.h
+  * @brief   Telemetry task for processing and sending system data.
+  ******************************************************************************
+  */
 
 #ifndef INC_TELEMETRY_TASK_H_
 #define INC_TELEMETRY_TASK_H_
 
+/**
+  * @brief  Main telemetry task.
+  * @retval None
+  */
 void Telemetry();
 
 #endif /* INC_TELEMETRY_TASK_H_ */

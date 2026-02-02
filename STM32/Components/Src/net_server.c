@@ -1,9 +1,9 @@
-/*
- * net_server.h
- *
- *  Created on: Jan 30, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    net_server.c
+  * @brief   Implementation of the TCP network server for command handling.
+  ******************************************************************************
+  */
 
 #include "net_server.h"
 #include "lwip/sockets.h"
@@ -13,18 +13,23 @@
 #include "logbuf.h"
 #include "FreeRTOS.h"
 
-// Expose client socket to TX task
-volatile int g_client_fd = -1;
+volatile int g_client_fd = -1; /**< Global file descriptor for the connected client socket */
 
-#define TCP_PORT 5000
+#define TCP_PORT 5000 /**< Listening port for the TCP server */
 
 void handle_line(const char *line); // from command_handler.c
 
+/**
+  * @brief  Main network server task.
+  *         Listens for incoming TCP connections and processes received commands.
+  * @param  argument: Task argument (unused).
+  * @retval None
+  */
 void NetServer(void const * argument)
 {
 	// Wait a bit so LwIP finishes init (important!)
 	osDelay(500);
-	volatile int g_client_fd = -1;
+	g_client_fd = -1;
 
 
 	int srv = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);

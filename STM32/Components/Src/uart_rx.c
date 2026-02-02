@@ -1,9 +1,9 @@
-/*
- * uart_rx.c
- *
- *  Created on: Jan 31, 2026
- *      Author: krzysztofsawicki
- */
+/**
+  ******************************************************************************
+  * @file    uart_rx.c
+  * @brief   Implementation of the UART DMA receiver.
+  ******************************************************************************
+  */
 
 #include "uart_rx.h"
 #include "cmsis_os.h"
@@ -12,12 +12,17 @@
 
 extern void handle_line(const char *line);
 
-#define RX_DMA_BUF_SZ 512
-static uint8_t rx_dma_buf[RX_DMA_BUF_SZ];
+#define RX_DMA_BUF_SZ 512 /**< Size of the circular DMA receive buffer */
+static uint8_t rx_dma_buf[RX_DMA_BUF_SZ]; /**< DMA receive buffer */
 
-static UART_HandleTypeDef *g_huart = NULL;
-static volatile uint16_t last_pos = 0;
+static UART_HandleTypeDef *g_huart = NULL; /**< Reference to the UART handle */
+static volatile uint16_t last_pos = 0;    /**< Last processed position in the DMA buffer */
 
+/**
+  * @brief  Processes new bytes received in the DMA buffer.
+  * @param  pos_now: Current position of the DMA write pointer.
+  * @retval None
+  */
 static void process_new_bytes(uint16_t pos_now)
 {
   // Pull bytes from last_pos up to pos_now (with wrap)
@@ -45,6 +50,11 @@ static void process_new_bytes(uint16_t pos_now)
   }
 }
 
+/**
+  * @brief  Initializes UART DMA reception in circular mode.
+  * @param  huart: Pointer to the UART handle.
+  * @retval None
+  */
 void uart_rx_dma_init(UART_HandleTypeDef *huart)
 {
   g_huart = huart;
@@ -54,9 +64,11 @@ void uart_rx_dma_init(UART_HandleTypeDef *huart)
   HAL_UART_Receive_DMA(g_huart, rx_dma_buf, RX_DMA_BUF_SZ);
 }
 
-
-
-// Task fallback (polling) in case you don’t want IDLE interrupt
+/**
+  * @brief  Main UART receiver task.
+  *         Polls the DMA counter and processes newly arrived data.
+  * @retval None
+  */
 void UartRx()
 {
   for (;;) {
