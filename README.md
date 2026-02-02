@@ -117,4 +117,4 @@ graph TD
 ## Authors
 - **Krzysztof Sawicki**
 - **Ivan Moroz**
--
+- **Michał Szerechowicz**
