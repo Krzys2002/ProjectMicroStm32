@@ -54,7 +54,7 @@ The system uses a JSON-based command/response protocol.
 
 ## Block Diagram
 
-Below is the high-level architecture of the user-written components in the firmware:
+Below is the high-level architecture of the components in the firmware:
 
 ```mermaid
 graph TD
